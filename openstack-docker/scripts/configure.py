@@ -19,6 +19,7 @@ import json
 import fabric.api
 
 from cloudify import ctx
+from neutron_plugin.port import FIXED_IP_ADDRESS_PROPERTY
 from openstack_plugin_common import (
     OPENSTACK_ID_PROPERTY,
     OPENSTACK_NAME_PROPERTY,
@@ -70,6 +71,7 @@ def _set_provider_context():
         'management_subnet': 'subnet',
         'management_network': 'int_network',
         'router': 'router',
+        'manager_port': 'port',
         'agents_security_group': 'agents_security_group',
         'management_security_group': 'management_security_group',
         'manager_server_ip': 'floating_ip',
@@ -92,6 +94,10 @@ def _set_provider_context():
             if node_instance.node_id == 'manager_server_ip':
                 resources[provider_context_field]['ip'] = \
                     run_props[IP_ADDRESS_PROPERTY]
+            elif node_instance.node_id == 'manager_port':
+                    resources[provider_context_field][
+                        FIXED_IP_ADDRESS_PROPERTY] = run_props[
+                        FIXED_IP_ADDRESS_PROPERTY]
             else:
                 resources[provider_context_field]['name'] = \
                     run_props[OPENSTACK_NAME_PROPERTY]

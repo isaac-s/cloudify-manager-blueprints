@@ -153,6 +153,7 @@ node_templates:
     properties:
       openstack_config: { get_property: [openstack_configuration, openstack_config] }
       resource_id: { get_input: manager_port_name }
+      fixed_ip: 10.67.79.123
     relationships:
       - type: cloudify.relationships.contained_in
         target: management_network
