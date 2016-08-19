@@ -15,6 +15,9 @@ region: ''
 #nova_url: ''
 #neutron_url: ''
 
+# Availability zone to use.
+#availability_zone: ''
+
 # The bootstrap process creates 2 key pairs in order to connect to the management machine and application hosts.
 # Set these properties to true (one or both) if you want to use existing key pairs, and not create new ones.
 #use_existing_manager_keypair: false
@@ -46,6 +49,7 @@ external_network_name: ''
 #use_existing_management_network: false
 #management_subnet_name: cloudify-management-network-subnet
 #use_existing_management_subnet: false
+#subnet_cidr: 172.16.0.0/16
 #management_router: cloudify-management-router
 #use_existing_router: false
 #manager_security_group_name: cloudify-sg-manager

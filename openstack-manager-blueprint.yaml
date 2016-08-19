@@ -43,6 +43,10 @@ inputs:
     default: ''
     type: string
 
+  availability_zone:
+    default: ''
+    type: string
+
   manager_public_key_name:
     type: string
 
@@ -105,6 +109,17 @@ inputs:
   use_existing_management_subnet:
     default: false
     type: boolean
+
+  management_subnet_cidr:
+    default: 172.16.0.0/16
+    type: string
+
+  management_subnet_gateway_ip:
+    default: 172.16.0.1
+    type: string
+
+  management_subnet_host_routes:
+    default: []
 
   management_subnet_dns_nameservers:
     default: []
@@ -727,8 +742,10 @@ node_templates:
       resource_id: { get_input: management_subnet_name }
       subnet:
         ip_version: 4
-        cidr: 172.16.0.0/16
+        cidr: { get_input: management_subnet_cidr }
         dns_nameservers: { get_input: management_subnet_dns_nameservers }
+        gateway_ip: { get_input: management_subnet_gateway_ip }
+        host_routes: { get_input: management_subnet_host_routes }
       openstack_config: *openstack_configuration
     relationships:
       - target: management_network
@@ -817,6 +834,7 @@ node_templates:
       server:
         image: { get_input: image_id }
         flavor: { get_input: flavor_id }
+        availability_zone: { get_input: availability_zone }
       management_network_name: { get_property: [management_network, resource_id] }
       openstack_config: *openstack_configuration
     relationships:
